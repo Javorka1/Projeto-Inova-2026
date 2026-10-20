@@ -1,0 +1,81 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@layer base {
+  :root {
+    --coa-bg: #0b0f17;
+    --coa-surface: #111827;
+    --coa-surface-hover: #1f2937;
+    --coa-border: #374151;
+    --coa-accent-green: #22c55e;
+    --coa-accent-amber: #f59e0b;
+    --coa-accent-red: #ef4444;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #0b0f17;
+    color: #f3f4f6;
+    overflow-x: hidden;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border: none;
+    text-align: left;
+  }
+}
+
+/* Custom map marker styles */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background-color: #0b0f17 !important;
+  background-image: 
+    linear-gradient(rgba(30, 41, 59, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 41, 59, 0.35) 1px, transparent 1px) !important;
+  background-size: 50px 50px !important;
+  font-family: inherit !important;
+}
+
+/* Dark mode leaflet popups */
+.leaflet-popup-content-wrapper {
+  background: #111827 !important;
+  color: #f3f4f6 !important;
+  border-radius: 8px !important;
+  border: 1px solid #374151 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-popup-tip {
+  background: #111827 !important;
+}
+
+.custom-pulsing-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
