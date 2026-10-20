@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Wifi, 
   WifiOff, 
   RefreshCw, 
   Cloud, 
   CloudOff, 
-  Database, 
   Volume2, 
   VolumeX, 
   Sun, 
   Moon, 
   Radio,
   Building2,
-  HardDrive
+  HardDrive,
+  Dice5,
+  Trash2,
+  RotateCcw,
+  Sparkles,
+  ChevronDown,
+  X
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { PLANT_COA } from '../../data/mockData';
@@ -30,7 +35,29 @@ export const Header: React.FC = () => {
     toggleSound,
     theme,
     toggleTheme,
+    addRandomTruck,
+    addRandomIncident,
+    fillRandomBatch,
+    removeAllRandom,
+    resetToDefaultData,
+    randomStats
   } = useApp();
+
+  const [isDemoMenuOpen, setIsDemoMenuOpen] = useState(false);
+  const demoMenuRef = useRef<HTMLDivElement>(null);
+
+  // Fechar ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (demoMenuRef.current && !demoMenuRef.current.contains(event.target as Node)) {
+        setIsDemoMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const totalRandomCount = randomStats.randomTrucksCount + randomStats.randomIncidentsCount;
 
   return (
     <header className="bg-slate-900 border-b border-slate-800 text-slate-100 sticky top-0 z-40 px-4 py-2.5 shadow-md">
@@ -62,6 +89,121 @@ export const Header: React.FC = () => {
         {/* Lado Direito: Indicadores Offline-First e Controles de Operação */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
           
+          {/* BOTÃO GERADOR DE DADOS ALEATÓRIOS (DEMO / TESTES) */}
+          <div className="relative" ref={demoMenuRef}>
+            <button
+              onClick={() => setIsDemoMenuOpen(!isDemoMenuOpen)}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-medium shadow transition"
+              title="Inserir e retirar valores aleatórios de teste"
+            >
+              <Dice5 className="w-3.5 h-3.5" />
+              <span className="font-semibold">Dados Aleatórios</span>
+              {totalRandomCount > 0 && (
+                <span className="px-1.5 py-0.2 rounded-full bg-slate-950/80 text-cyan-300 font-mono text-[10px] font-bold">
+                  {totalRandomCount}
+                </span>
+              )}
+              <ChevronDown className="w-3 h-3 text-emerald-200" />
+            </button>
+
+            {/* Menu Popover */}
+            {isDemoMenuOpen && (
+              <div className="absolute right-0 mt-2 w-72 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl p-3 text-xs text-slate-200 z-50 space-y-2 animate-in fade-in zoom-in-95">
+                <div className="flex items-center justify-between pb-1.5 border-b border-slate-800">
+                  <span className="font-bold text-white flex items-center gap-1 text-[13px]">
+                    <Sparkles className="w-4 h-4 text-emerald-400" />
+                    Gerador de Testes (Demo)
+                  </span>
+                  <button 
+                    onClick={() => setIsDemoMenuOpen(false)}
+                    className="text-slate-400 hover:text-white"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                <p className="text-[11px] text-slate-400">
+                  Insira ou retire dados gerados aleatoriamente para simular a operação do COA.
+                </p>
+
+                <div className="space-y-1.5 pt-1">
+                  <button
+                    onClick={() => {
+                      addRandomTruck();
+                      setIsDemoMenuOpen(false);
+                    }}
+                    className="w-full text-left p-2 rounded-lg bg-slate-800 hover:bg-emerald-600/20 hover:border-emerald-500/50 border border-slate-700 transition flex items-center justify-between"
+                  >
+                    <div>
+                      <div className="font-semibold text-white">🚚 + Caminhão Aleatório</div>
+                      <div className="text-[10px] text-slate-400">Gera rodotrem com motorista e rota</div>
+                    </div>
+                    <span className="text-emerald-400 font-bold">+1</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      addRandomIncident();
+                      setIsDemoMenuOpen(false);
+                    }}
+                    className="w-full text-left p-2 rounded-lg bg-slate-800 hover:bg-amber-600/20 hover:border-amber-500/50 border border-slate-700 transition flex items-center justify-between"
+                  >
+                    <div>
+                      <div className="font-semibold text-white">⚠️ + Incidente Aleatório</div>
+                      <div className="text-[10px] text-slate-400">Atoleiro, ponte ou poeira em vicinal</div>
+                    </div>
+                    <span className="text-amber-400 font-bold">+1</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      fillRandomBatch();
+                      setIsDemoMenuOpen(false);
+                    }}
+                    className="w-full text-left p-2 rounded-lg bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-600/50 text-emerald-200 transition font-medium flex items-center justify-between"
+                  >
+                    <div>
+                      <div className="font-bold text-white">⚡ Preencher Lote Aleatório</div>
+                      <div className="text-[10px] text-emerald-300">3 caminhões + 1 incidente</div>
+                    </div>
+                    <span className="text-emerald-300 font-mono text-[11px]">+4</span>
+                  </button>
+                </div>
+
+                {/* Seção de Retirada */}
+                <div className="pt-2 border-t border-slate-800 space-y-1.5">
+                  {totalRandomCount > 0 ? (
+                    <button
+                      onClick={() => {
+                        removeAllRandom();
+                        setIsDemoMenuOpen(false);
+                      }}
+                      className="w-full p-2 rounded-lg bg-rose-950/70 hover:bg-rose-900 text-rose-200 border border-rose-800/60 font-semibold transition flex items-center justify-center gap-1.5"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Retirar Todos os Aleatórios ({totalRandomCount})</span>
+                    </button>
+                  ) : (
+                    <div className="text-[11px] text-slate-500 text-center py-1 italic">
+                      Nenhum dado aleatório adicionado no momento.
+                    </div>
+                  )}
+
+                  <button
+                    onClick={() => {
+                      resetToDefaultData();
+                      setIsDemoMenuOpen(false);
+                    }}
+                    className="w-full p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5 text-[11px]"
+                  >
+                    <RotateCcw className="w-3 h-3 text-slate-400" />
+                    <span>Restaurar Valores Padrão</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Indicador de Status de Rede (Online / Offline) */}
           <div className="flex items-center bg-slate-800/80 border border-slate-700/80 rounded-lg p-1.5 px-2.5 gap-2 shadow-sm">
             <button
@@ -168,4 +310,3 @@ export const Header: React.FC = () => {
     </header>
   );
 };
-

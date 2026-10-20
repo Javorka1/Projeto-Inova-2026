@@ -28,6 +28,18 @@ export interface Driver {
   phone: string;
 }
 
+// Estradas Vicinais Não Pavimentadas (Terra e Cascalho)
+export interface VicinalRoad {
+  id: string;
+  name: string;
+  code: string;
+  surface: 'Terra Cascalhada' | 'Terra Argilosa' | 'Cascalho Batido' | string;
+  speedLimitKmH: number;
+  condition: 'Ótima' | 'Atenção (Costela de Vaca)' | 'Crítica (Barro/Atoleiro)' | string;
+  coordinates: [number, number][];
+  description?: string;
+}
+
 export interface Truck {
   id: string;
   plate: string;
@@ -50,6 +62,8 @@ export interface Truck {
   scheduledMoegaSlot?: string; // Horário reservado na moega (ex: "15:42")
   distanceToDestKm: number; // Distância restante
   lastTelemetryUpdate: string; // ISO string
+  assignedRouteId?: string; // ID da rota vicinal associada (ex: vic-01, vic-03)
+  isRandom?: boolean;       // Marcador de registro gerado pelo botão aleatório
 }
 
 export interface Harvester {
@@ -127,6 +141,7 @@ export interface TrafficIncident {
   detourActive: boolean;    // Se o desvio automático foi acionado
   suggestedDetourVicinal?: string; // Rota alternativa (ex: "Vicinal das Palmeiras")
   isResolved: boolean;
+  isRandom?: boolean; // Marcador de registro gerado pelo botão aleatório
 }
 
 export interface CttKpis {

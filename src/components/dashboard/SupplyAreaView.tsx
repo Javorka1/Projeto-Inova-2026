@@ -17,7 +17,15 @@ import {
 import { FieldTalhao } from '../../types';
 
 export const SupplyAreaView: React.FC = () => {
-  const { talhoes, trucks, moegas, setActiveTab, setSelectedTruck } = useApp();
+  const { 
+    talhoes, 
+    trucks, 
+    moegas, 
+    setActiveTab, 
+    setSelectedTruck,
+    vicinalRoads,
+    setSelectedRoute 
+  } = useApp();
   const [selectedTalhaoId, setSelectedTalhaoId] = useState<string>(talhoes[0].id);
 
   const selectedTalhao = talhoes.find(t => t.id === selectedTalhaoId) || talhoes[0];
@@ -180,7 +188,14 @@ export const SupplyAreaView: React.FC = () => {
               </p>
             </div>
             <button
-              onClick={() => setActiveTab('map')}
+              onClick={() => {
+                const road = vicinalRoads.find(r => 
+                  selectedTalhao.primaryVicinalRoad.includes(r.code) || 
+                  selectedTalhao.primaryVicinalRoad.includes(r.name)
+                );
+                if (road) setSelectedRoute(road);
+                setActiveTab('map');
+              }}
               className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1.5 transition"
             >
               <MapPin className="w-3.5 h-3.5 text-emerald-400" />

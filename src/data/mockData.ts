@@ -1,4 +1,5 @@
-import { Truck, Harvester, Transshipment, FieldTalhao, Moega, TrafficIncident, CttKpis } from '../types';
+import { Truck, Harvester, Transshipment, FieldTalhao, Moega, TrafficIncident, CttKpis, VicinalRoad } from '../types';
+export type { VicinalRoad };
 
 // Usina Central de Operações Agrícolas (COA - Minas Gerais)
 export const PLANT_COA = {
@@ -130,16 +131,6 @@ export const INITIAL_TALHOES: FieldTalhao[] = [
 ];
 
 // Estradas Vicinais Não Pavimentadas (Terra e Cascalho) em Minas Gerais
-export interface VicinalRoad {
-  id: string;
-  name: string;
-  code: string;
-  surface: 'Terra Cascalhada' | 'Terra Argilosa' | 'Cascalho Batido';
-  speedLimitKmH: number;
-  condition: 'Ótima' | 'Atenção (Costela de Vaca)' | 'Crítica (Barro/Atoleiro)';
-  coordinates: [number, number][];
-}
-
 export const VICINAL_ROADS: VicinalRoad[] = [
   {
     id: 'vic-01',
@@ -241,6 +232,7 @@ export const INITIAL_TRUCKS: Truck[] = [
     scheduledMoegaSlot: '15:15',
     distanceToDestKm: 6.2,
     lastTelemetryUpdate: new Date().toISOString(),
+    assignedRouteId: 'vic-03',
     driver: {
       id: 'drv-01',
       name: 'Claudinei Silveira',
@@ -275,6 +267,7 @@ export const INITIAL_TRUCKS: Truck[] = [
     scheduledMoegaSlot: '15:00',
     distanceToDestKm: 0.0,
     lastTelemetryUpdate: new Date().toISOString(),
+    assignedRouteId: 'vic-03',
     driver: {
       id: 'drv-02',
       name: 'Valdemar Ribeiro',
@@ -309,6 +302,7 @@ export const INITIAL_TRUCKS: Truck[] = [
     scheduledMoegaSlot: '15:05',
     distanceToDestKm: 0.0,
     lastTelemetryUpdate: new Date().toISOString(),
+    assignedRouteId: 'vic-01',
     driver: {
       id: 'drv-03',
       name: 'Marcio Mendonça',
@@ -343,6 +337,7 @@ export const INITIAL_TRUCKS: Truck[] = [
     scheduledMoegaSlot: '15:24',
     distanceToDestKm: 9.8,
     lastTelemetryUpdate: new Date().toISOString(),
+    assignedRouteId: 'vic-07',
     driver: {
       id: 'drv-04',
       name: 'Sebastião Gonzaga',
@@ -375,6 +370,7 @@ export const INITIAL_TRUCKS: Truck[] = [
     etaMinutes: 11,
     distanceToDestKm: 5.4,
     lastTelemetryUpdate: new Date().toISOString(),
+    assignedRouteId: 'vic-01',
     driver: {
       id: 'drv-05',
       name: 'José Carlos Peixoto',
@@ -407,6 +403,7 @@ export const INITIAL_TRUCKS: Truck[] = [
     etaMinutes: 45,
     distanceToDestKm: 22.1,
     lastTelemetryUpdate: new Date().toISOString(),
+    assignedRouteId: 'vic-04',
     driver: {
       id: 'drv-06',
       name: 'Ademir Fagundes',
@@ -438,6 +435,7 @@ export const INITIAL_TRUCKS: Truck[] = [
     etaMinutes: 0,
     distanceToDestKm: 0,
     lastTelemetryUpdate: new Date().toISOString(),
+    assignedRouteId: 'vic-01',
     driver: {
       id: 'drv-07',
       name: 'Geraldo Magela',

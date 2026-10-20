@@ -58,6 +58,23 @@ export const storageService = {
     }
   },
 
+  // Restaurar dados originais de fábrica
+  resetToDefaults(): { trucks: Truck[]; incidents: TrafficIncident[] } {
+    try {
+      localStorage.removeItem(TRUCKS_KEY);
+      localStorage.removeItem(INCIDENTS_KEY);
+      localStorage.removeItem(PENDING_SYNC_KEY);
+    } catch (e) {
+      console.warn('Erro ao limpar cache local', e);
+    }
+    this.saveTrucks(INITIAL_TRUCKS);
+    this.saveIncidents(INITIAL_INCIDENTS);
+    return {
+      trucks: INITIAL_TRUCKS,
+      incidents: INITIAL_INCIDENTS,
+    };
+  },
+
   // Modo Offline-First
   isOffline(): boolean {
     const stored = localStorage.getItem(OFFLINE_MODE_KEY);

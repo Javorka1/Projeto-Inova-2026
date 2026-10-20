@@ -18,7 +18,9 @@ import {
   CheckCircle2, 
   AlertCircle, 
   Zap,
-  Gauge
+  Gauge,
+  Dice5,
+  Route
 } from 'lucide-react';
 
 export const FleetManagement: React.FC = () => {
@@ -28,7 +30,12 @@ export const FleetManagement: React.FC = () => {
     updateTruck, 
     deleteTruck, 
     setSelectedTruck, 
-    setActiveTab 
+    setActiveTab,
+    addRandomTruck,
+    removeAllRandom,
+    randomStats,
+    vicinalRoads,
+    setSelectedRoute
   } = useApp();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -114,6 +121,10 @@ export const FleetManagement: React.FC = () => {
   const handleViewOnMap = (truck: Truck, e: React.MouseEvent) => {
     e.stopPropagation();
     setSelectedTruck(truck);
+    if (truck.assignedRouteId) {
+      const route = vicinalRoads.find(r => r.id === truck.assignedRouteId);
+      if (route) setSelectedRoute(route);
+    }
     setActiveTab('map');
   };
 
@@ -137,13 +148,35 @@ export const FleetManagement: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow-lg shadow-emerald-950/60 shrink-0"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Cadastrar Caminhão</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <button
+            onClick={() => addRandomTruck()}
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-emerald-600/20 hover:border-emerald-500/50 border border-slate-700 text-emerald-300 text-xs font-semibold transition"
+            title="Inserir um novo caminhão com dados aleatórios"
+          >
+            <Dice5 className="w-4 h-4 text-emerald-400" />
+            <span>+ Aleatório</span>
+          </button>
+
+          {randomStats.randomTrucksCount > 0 && (
+            <button
+              onClick={() => removeAllRandom()}
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-rose-950/70 hover:bg-rose-900 border border-rose-800/60 text-rose-300 text-xs font-semibold transition"
+              title="Remover todos os caminhões e incidentes gerados aleatoriamente"
+            >
+              <Trash2 className="w-4 h-4" />
+              <span>Retirar Aleatórios ({randomStats.randomTrucksCount})</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => setIsAddModalOpen(true)}
+            className="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow-lg shadow-emerald-950/60"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Cadastrar Caminhão</span>
+          </button>
+        </div>
       </div>
 
       {/* Barra de Filtros e Busca */}
@@ -224,11 +257,22 @@ export const FleetManagement: React.FC = () => {
                           {truck.prefix}
                         </div>
                         <div>
-                          <div className="font-semibold text-white group-hover:text-emerald-300 transition">
-                            {truck.model}
+                          <div className="font-semibold text-white group-hover:text-emerald-300 transition flex items-center gap-1.5">
+                            <span>{truck.model}</span>
+                            {truck.isRandom && (
+                              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-amber-950 text-amber-400 border border-amber-600/40">
+                                🎲 Aleatório
+                              </span>
+                            )}
                           </div>
-                          <div className="text-[11px] text-slate-400 font-mono">
-                            Placa: <strong className="text-slate-200">{truck.plate}</strong> • {truck.capacityTons}t
+                          <div className="text-[11px] text-slate-400 font-mono flex items-center gap-2">
+                            <span>Placa: <strong className="text-slate-200">{truck.plate}</strong> • {truck.capacityTons}t</span>
+                            {truck.assignedRouteId && (
+                              <span className="text-cyan-400 flex items-center gap-1 font-semibold">
+                                <Route className="w-3 h-3 text-cyan-400" />
+                                {vicinalRoads.find(r => r.id === truck.assignedRouteId)?.code || 'Vicinal'}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </div>

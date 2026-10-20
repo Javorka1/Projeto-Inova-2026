@@ -13,7 +13,9 @@ import {
   Clock, 
   Radio,
   Share2,
-  Compass
+  Compass,
+  Dice5,
+  Trash2
 } from 'lucide-react';
 
 export const TrafficIncidentsFeed: React.FC = () => {
@@ -22,7 +24,10 @@ export const TrafficIncidentsFeed: React.FC = () => {
     reportIncident, 
     toggleIncidentDetour, 
     resolveIncident, 
-    setActiveTab 
+    setActiveTab,
+    addRandomIncident,
+    removeAllRandom,
+    randomStats 
   } = useApp();
 
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -67,13 +72,35 @@ export const TrafficIncidentsFeed: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setIsReportModalOpen(true)}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition shadow-lg shadow-rose-950/60 shrink-0"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Reportar Alerta de Estrada</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <button
+            onClick={() => addRandomIncident()}
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-amber-600/20 hover:border-amber-500/50 border border-slate-700 text-amber-300 text-xs font-semibold transition"
+            title="Inserir um alerta de estrada com dados aleatórios"
+          >
+            <Dice5 className="w-4 h-4 text-amber-400" />
+            <span>+ Aleatório</span>
+          </button>
+
+          {randomStats.randomIncidentsCount > 0 && (
+            <button
+              onClick={() => removeAllRandom()}
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-rose-950/70 hover:bg-rose-900 border border-rose-800/60 text-rose-300 text-xs font-semibold transition"
+              title="Remover incidentes gerados aleatoriamente"
+            >
+              <Trash2 className="w-4 h-4" />
+              <span>Retirar ({randomStats.randomIncidentsCount})</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => setIsReportModalOpen(true)}
+            className="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition shadow-lg shadow-rose-950/60"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Reportar Alerta de Estrada</span>
+          </button>
+        </div>
       </div>
 
       {/* Filtros Rápidos */}
@@ -140,15 +167,22 @@ export const TrafficIncidentsFeed: React.FC = () => {
                         {getIncidentIcon(incident.type)}
                       </div>
                       <div>
-                        <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border ${
-                          incident.isResolved
-                            ? 'bg-slate-800 text-slate-400 border-slate-700'
-                            : isCritical
-                            ? 'bg-rose-950 text-rose-400 border-rose-800'
-                            : 'bg-amber-950 text-amber-400 border-amber-800'
-                        }`}>
-                          {incident.isResolved ? 'Resolvido / Pista Seca' : `Gravidade ${incident.severity.toUpperCase()}`}
-                        </span>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border ${
+                            incident.isResolved
+                              ? 'bg-slate-800 text-slate-400 border-slate-700'
+                              : isCritical
+                              ? 'bg-rose-950 text-rose-400 border-rose-800'
+                              : 'bg-amber-950 text-amber-400 border-amber-800'
+                          }`}>
+                            {incident.isResolved ? 'Resolvido / Pista Seca' : `Gravidade ${incident.severity.toUpperCase()}`}
+                          </span>
+                          {incident.isRandom && (
+                            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-600/40 font-bold">
+                              🎲 Aleatório
+                            </span>
+                          )}
+                        </div>
                         <h3 className="text-sm font-bold text-white mt-1 leading-tight">
                           {incident.title}
                         </h3>
