@@ -1,0 +1,91 @@
+================================================================================
+PROJETO INOVA — FACULDADE
+SISTEMA INTELIGENTE DE LOGÍSTICA AGRÍCOLA
+Tema: Otimização do Transporte e Logística no Campo (Corte, Transbordo e Transporte)
+================================================================================
+
+1. O QUE É O PROJETO?
+--------------------------------------------------------------------------------
+Este projeto foi desenvolvido para o Inova, evento/feira de inovação da faculdade.
+O tema escolhido pelo nosso grupo foi a Logística Agrícola, que é responsável
+por todo o trajeto da colheita desde a plantação na fazenda até a chegada na
+usina ou fábrica (como usinas de cana-de-açúcar ou produtores de grãos).
+
+Desenvolvemos um sistema inteligente (uma central de controle digital) que
+organiza a viagem dos caminhões, acaba com filas demoradas no portão da usina,
+avisa sobre problemas nas estradas de terra e continua funcionando perfeitamente
+mesmo quando a internet do celular cai no meio da fazenda.
+
+
+2. QUAIS PROBLEMAS REAIS DO CAMPO O SISTEMA RESOLVE?
+--------------------------------------------------------------------------------
+No dia a dia das colheitas, levar a matéria-prima da fazenda até a indústria é
+muito caro e trabalhoso. Nosso projeto foi pensado para solucionar 4 grandes
+dificuldades:
+
+• Filas de caminhões na usina:
+  Muitos caminhões chegam juntos para descarregar e ficavam horas parados com o
+  motor ligado no pátio, gastando centenas de litros de óleo diesel à toa.
+
+• Estradas de terra difíceis e atoleiros:
+  Com chuvas de repente no campo, formam-se poças grandes, barro liso e pontes
+  de madeira quebram. Quando um caminhão quebra ou atola, trava a viagem de todos.
+
+• Falta de sinal de celular (4G) na roça:
+  No interior das fazendas é muito difícil ter internet boa. Aplicativos comuns
+  travam ou não abrem quando perdem a conexão.
+
+• Cansaço e segurança dos motoristas:
+  Garantir que nenhum motorista dirija por horas seguidas sem parar para descansar,
+  cuidando da saúde de quem dirige e evitando acidentes.
+
+
+3. COMO O PROGRAMA FUNCIONA? (PRINCIPAIS FUNCIONALIDADES)
+--------------------------------------------------------------------------------
+
+1. MAPA COM RASTREAMENTO EM TEMPO REAL:
+   A central de comando consegue ver um mapa da região mostrando exatamente onde
+   está cada caminhão, trator e colhedora, além de indicar as plantações que
+   estão sendo colhidas e as estradas até a usina.
+
+2. FILA VIRTUAL INTELIGENTE (SEM FILA NO PORTÃO):
+   Em vez do motorista correr na estrada de terra e depois ficar horas na fila da
+   usina, o sistema calcula a velocidade ideal para ele andar. Se a usina estiver
+   ocupada, o caminhão viaja um pouco mais devagar com calma e segurança, chegando
+   na hora exata em que o descarregador estiver livre. Isso economiza muito
+   combustível e evita filas no portão.
+
+3. ALERTAS DE OCORRÊNCIAS NA ESTRADA (ATOLEIROS E PONTES):
+   Funciona como um aviso comunitário: se alguém encontra lamaçal, poça funda ou
+   uma ponte quebrada, o alerta é registrado na hora. O sistema avisa os outros
+   caminhões e já sugere um caminho alternativo para ninguém ficar preso.
+
+4. ACOMPANHAMENTO DOS VEÍCULOS E CUIDADO COM O MOTORISTA:
+   Mostra o peso da carga que o caminhão está levando, o nível do tanque de
+   combustível e o tempo de volante. Se o motorista estiver dirigindo há mais de
+   4 horas sem descanso, o sistema avisa para ele fazer uma pausa.
+
+5. FUNCIONA MESMO SEM INTERNET (MODO OFFLINE):
+   Se o caminhão estiver num lugar onde o sinal do celular sumiu completamente,
+   o programa não trava. Ele continua registrando tudo no próprio aparelho e,
+   assim que o veículo passar perto de um ponto com sinal ou chegar na usina,
+   todas as informações são enviadas automaticamente.
+
+6. PAINEL SIMPLES COM RESULTADOS E ECONOMIA:
+   Mostra em números fáceis de entender quanto óleo diesel foi economizado, quantas
+   toneladas de produto já foram entregues no dia e o tempo médio de cada viagem.
+
+
+4. RESUMO DOS BENEFÍCIOS PRÁTICOS
+--------------------------------------------------------------------------------
+• Economia de Dinheiro: Corta o gasto excessivo de combustível com motores parados
+  em filas.
+• Meio Ambiente: Menor queima desnecessária de diesel e menos fumaça no ar.
+• Segurança e Saúde: Ajuda a respeitar o descanso dos motoristas de caminhão.
+• Eficiência na Colheita: A safra chega fresca e rápida para a moagem.
+• Confiança: Funciona na realidade do campo brasileiro, sem depender de internet 100%
+  do tempo.
+
+================================================================================
+Documento elaborado para apresentação e avaliação do Projeto Inova (2026).
+================================================================================
